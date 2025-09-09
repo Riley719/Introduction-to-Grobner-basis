@@ -1,0 +1,4 @@
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}%
+\contentsline {section}{\numberline {2}Monomial Orders}{4}{section.2}%
+\contentsline {section}{\numberline {3}The Gr\"{o}bner Basis}{7}{section.3}%
+\contentsfinish 

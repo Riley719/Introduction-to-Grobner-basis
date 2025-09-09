@@ -1,0 +1,328 @@
+\documentclass{article}
+\usepackage{type1cm}
+\usepackage{graphicx}
+
+% Page settings
+\usepackage[margin=20mm]{geometry}
+\usepackage{titletoc}
+\titlecontents{section}[0em]{\vspace{15pt}}{}{}
+    {\ \ \titlerule*{.}\makebox[2em][r]{\thecontentspage}}
+\titlecontents{subsection}[1em]{}{}{}
+    {\ \ \titlerule*{.}\makebox[2em][r]{\thecontentspage}}
+\makeatletter
+\renewcommand{\tableofcontents}{%
+\@mkboth{\contentsname}{\contentsname}%
+\@starttoc{toc}%
+}
+\makeatother
+\usepackage{titlesec}
+\titlelabel{}
+\usepackage{cite}
+
+
+
+% Math packages and commands
+\usepackage{
+    amsmath,
+    mathtools,
+    amssymb,
+    physics,
+    pifont,
+    bm
+}
+\mathtoolsset{showonlyrefs=true}
+\allowdisplaybreaks
+\newcommand{\mf}[1]{\mathfrak{#1}}
+\newcommand{\mb}[1]{\mathbb{#1}}
+\newcommand{\rad}{\mathrm{Rad}}
+\renewcommand{\ker}{\mathrm{Ker}}
+\renewcommand{\tr}{\mathrm{Tr}}
+\renewcommand{\abs}[1]{\left| #1 \right|}
+\renewcommand{\mid}{\middle|}
+\newcommand{\defarrow}{\overset{\mathrm{def}}{\iff}}
+\DeclareMathOperator{\sgn}{\mathrm{sgn}}
+\newsavebox{\circlebox}
+\savebox{\circlebox}{\fontencoding{OMS}\selectfont\large\char13}
+\newlength{\circleboxwdht}
+\newcommand{\centercircle}[1]{%
+  \setlength{\circleboxwdht}{\wd\circlebox}%
+  \addtolength{\circleboxwdht}{\dp\circlebox}%
+  \raisebox{0.4\dp\circlebox}{%
+    \parbox[][\circleboxwdht][c]{\wd\circlebox}{\centering#1}}%
+  \llap{\usebox{\circlebox}}%
+}
+\newcommand{\cbecause}{\centercircle{$\because$}~}
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+
+% Appearance
+\usepackage{multicol}
+\pagenumbering{arabic}
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage \hspace{1pt} / \hspace{1pt} \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\newcommand{\ds}[1]{\displaystyle{#1}}
+\usepackage[hyphens]{url}
+\renewcommand{\refname}{}
+\lhead{\leftmark \  \rightmark}
+\chead{}
+\rhead{}
+\lfoot{\hyperlink{toc_page}{Jump to Table of Contents}}
+\rfoot{© Riley}
+\renewcommand{\sectionmark}[1]{\xdef\leftmark{#1}\xdef\rightmark{}}
+\renewcommand{\subsectionmark}[1]{\xdef\rightmark{#1}}
+
+% Enumerating setting
+\usepackage[at]{easylist}
+
+\usepackage{statementsp3}
+\usepackage{luacolor}
+\newcommand{\ul}[1]{\underLine{#1}}
+\newcommand{\redhl}[1]{\underLine[color=red!40, top=11.5pt, height=16pt]{#1}}
+
+
+% Matrix
+\newcommand{\bmat}[1]{\begin{bmatrix} #1 \end{bmatrix}}
+\newcommand{\matri}[2]{\mathrm{M}_{#1}(#2)}
+\newcommand{\genl}[2]{\mathrm{GL}_{#1}(#2)}
+\DeclareMathOperator{\diag}{diag}
+\renewcommand{\vector}[2]{{#1}_1, \ldots , {#1}_{#2}}
+\newcommand{\mappingsp}[5]{
+    \begin{align}
+        \begin{array}{rccc}
+            #1\colon &#2                     &\longrightarrow& #3                     \\
+                    & \rotatebox{90}{$\in$}&               & \rotatebox{90}{$\in$} \\
+                    & #4                    & \longmapsto   & #5
+            \end{array}
+    \end{align}
+}
+\newcommand{\trans}[1]{{#1}^{\top}}
+\newcommand{\helmit}[1]{{#1}^{\dag}}
+
+% Statement boxes
+\newstatementsp{axiom}{Axiom}{000000}{FFCCCC} % #000000 (black text), #FFCCCC (light red background)
+\newstatementsp{def}{Def}{000000}{FFCCCC}     % #000000 (black text), #FFCCCC (light red background)
+\newstatementsp{th}{Th}{000000}{B380FF}       % #000000 (black text), #B380FF (light purple background)
+\newstatementsp{prop}{Prop}{000000}{CCCCFF}   % #000000 (black text), #CCCCFF (light blue background)
+\newstatementsp{lem}{Lem}{000000}{CCCCFF}     % #000000 (black text), #CCCCFF (light blue background)
+\newstatementsp{cor}{Cor}{000000}{CCCCFF}     % #000000 (black text), #CCCCFF (light blue background)
+\newstatementsp{rem}{Rem}{000000}{FFFF99}     % #000000 (black text), #FFFF99 (light yellow background)
+\newstatementsp{ex}{Ex}{000000}{CCCCCC}       % #000000 (black text), #CCCCCC (light gray background)
+
+\title{Introduction to Gr\"{o}bner Basis Special}
+\author{Riley~@Na2COOH\_2}
+
+\begin{document}
+\pagestyle{empty}
+\maketitle
+\begin{abstract}
+    This document is an introduction to Gr\"{o}bner basis for beginners. The Gr\"{o}bner basis used in the computer science mainly, but this document is for people in the commutative algebra. To read this document, you need to know the basic concepts of undergraduate mathematics. \\ 
+    This document has MIT License. You can use, copy, modify, and redistribute it freely. However, please do not use or distribute this document without MIT License.
+\end{abstract}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\columnwidth]{./Bruno_Buchberger.jpg}
+    \caption{Bruno Buchberger}
+\end{figure}
+
+\newpage
+
+\setlength{\columnseprule}{0.5pt}
+\hypertarget{toc_page}{}
+\noindent\textbf{\Large Table of Contents}
+\begin{multicols*}{2}
+    \tableofcontents
+\end{multicols*}
+\pagestyle{fancy}
+\setlength{\headheight}{13.6pt} % Fix fancyhdr warning
+\addtolength{\topmargin}{-1.6pt} % Optional: compensate for increased headheight
+\newpage
+
+\section{Introduction}
+The Gr\"{o}bner basis is said to be introduced by Bruno Buchberger, a computer scientist, in 1965, and named them after his advisor Wolfgang Gr\"{o}bner. As its name, it is like a basis of an ideal of a polynomial ring. We will show that we can compute the generators of a given ideal by using the Gr\"{o}bner basis. By using this computation, mathematicians often use the Gr\"{o}bner basis to compute the generators of an ideal by using a computer. However, the Gr\"{o}bner basis is not only useful for such a computational tool. It is also useful for theoretical aspects. For example, we will show that many of concepts in polynomial rings is invariant under taking an \textit{initial}.
+
+This document is based on the 20th summer school of commutative ring theory in Osaka university in 2025. In this summer school, we read \cite{Bruns2022} mainly. You can access the site of the summer school. \url{https://sites.google.com/view/comm-ring-summer-school-2025/%E3%83%9B%E3%83%BC%E3%83%A0?authuser=0}
+
+\newpage
+
+\section{Monomial Orders}
+In this section, let $K$ be a field and $R = K[x_1, \ldots, x_n]$ be the polynomial ring in $n$ variables over $K$.
+
+\begin{statementsp}<def>[monomialorder](Monomial and Monomial Order)
+    A \textit{monomial} in $R$ is a product of powers of variables, i.e., a polynomial of the form
+    \begin{align}
+        x_1^{a_1} x_2^{a_2} \cdots x_n^{a_n}
+    \end{align}
+    where $a_i$ are non negative integers. \\ 
+    We call a \textit{term} a form of $a \mu$ where $a \in K \setminus \left\{ 0 \right\}$ and $\mu$ is a monomial. We denote the set of all monomials in $R$ by $\mathrm{Mon}(R)$. 
+    \begin{align}
+        \mathrm{Mon}(R) = \left\{ \mu \mid \mu \text{ is a monomial in } R \right\}
+    \end{align}
+
+    A \textit{monomial order} on $R$ is a total order $\leq$ on $\mathrm{Mon}(R)$ such that 
+    \begin{enumerate}
+        \item $\forall \mu, \nu, \xi \in \mathrm{Mon}(R), \quad \mu \leq \nu \implies \mu \xi \leq \nu \xi$
+        \item $\forall \mu \in \mathrm{Mon}(R), \quad 1 \leq \mu$
+    \end{enumerate}
+\end{statementsp}
+
+\begin{statementsp}<def>[support](Support)
+    For a non zero polynomial $f \in R$, we define the \textit{support} of $f$ by
+    \begin{align}
+        \mathrm{Supp}(f) = \left\{ \mu \in \mathrm{Mon}(R) \mid \text{the coefficient of } \mu \text{ in } f \text{ is not } 0 \right\}
+    \end{align}
+\end{statementsp}
+
+Of course, $\mathrm{Supp}(f)$ is a finite set. And we can express $f$ uniquely as
+\begin{align}
+    f = \sum_{\mu \in \mathrm{Supp}(f)} a_\mu \mu
+\end{align}
+where $a_\mu \in K \setminus \left\{ 0 \right\}$ is the coefficient of $\mu$ in $f$.
+
+\begin{statementsp}<ex>[](Examples of Monomial Orders)
+    For monomials $\mu = x_1^{a_1} \cdots x_n^{a_n}$ and $\nu = x_1^{b_1} \cdots x_n^{b_n}$, we define the following monomial orders.
+    \begin{enumerate}
+        \item \textit{lexicographic order} (lex): \\ $\mu \leq_{\mathrm{lex}} \nu$ if and only if there is $k$ which satisfies $a_i = b_i$ for $i < k$ and $a_k < b_k$.
+        \item \textit{degree lexicographic order} (deglex): \\ $\mu \leq_{\mathrm{deglex}} \nu$ if and only if $\deg\mu = \sum a_i < \sum b_i = \deg\nu$ or $\sum a_i = \sum b_i$ and $\mu \leq_{\mathrm{lex}} \nu$.
+        \item (degree) reverse lexicographic order (degrevlex): \\ $\mu \leq_{\mathrm{degrevlex}} \nu$ if and only if $\deg\mu = \sum a_i < \sum b_i = \deg\nu$ or $\sum a_i = \sum b_i$ and there is $k$ which satisfies $a_i = b_i$ for $i > k$ and $a_k > b_k$.
+    \end{enumerate}
+\end{statementsp}
+
+We can easily check these relations are indeed monomial orders. We often use a lex order.
+
+The order of monomials can change if we choose a different monomial order as follows.
+\begin{statementsp}<ex>[]()
+    Let $R = K[x,y,z]$ and consider the lex order with $x > y > z$. Then, we have
+    \begin{align}
+        x^2 > xz > y^2
+    \end{align}
+    in lex order. However, in degrevlex order, we have
+    \begin{align}
+        x^2 > y^2 > xz
+    \end{align}
+\end{statementsp}
+
+The readers may know Hilbert's basis theorem. By using this theorem, we can show the following important proposition, \refsp{prop:ACC}. This proposition gurantees the halting of algorithms. Before showing \refsp{prop:ACC}, we prepare the following proposition.
+
+\begin{statementsp}<prop>[noegen]()
+    Let $A$ be a commutative noetherian ring with $1$, $I$ be an ideal of $A$ and $E$ be a generator system of $I$. Then, there exists a finite subset $F$ of $E$ such that $F$ is also a generator system of $I$.
+\end{statementsp}
+\begin{pfsp}
+    Since $A$ is noetherian, there exists a maximal element of the following set. 
+    \begin{align}
+        \left\{ (J) \mid J \subset E \text{ is a finite subset. } \right\}
+    \end{align}
+    where $(J)$ is the ideal generated by $J$. Let $F$ be a maximal element of this set. We will show that $I = (F)$. If not, there exists $f \in I \setminus (F)$. Then, $(F \cup \left\{ f \right\})$ is strictly larger than $(F)$, which contradicts the maximality of $(F)$. Thus, we have $I = (F)$.
+\end{pfsp}
+
+\begin{statementsp}<prop>[ACC](Monomial Order is well-order)
+    The monomial order on $R$ is a well-order, i.e., every non empty subset of $\mathrm{Mon}(R)$ has the minimal element. In particular, there is no infinite descending chain
+    \begin{align}
+        \mu_1 > \mu_2 > \mu_3 > \cdots
+    \end{align}
+\end{statementsp}
+\begin{pfsp}
+    We take $\emptyset \neq N \subset \mathrm{Mon}(R)$ and it is enough to show $N$ has the minimum element. Let $I$ be the ideal generated by $N$. And $R$ is noetherian by Hilbert's basis theorem, and by \refsp{prop:noegen}, we can write $I = (f_1, \cdots, f_r) \quad (f_i \in N)$. Assume $f_1$ is the minimum element of $\left\{ f_1, \ldots, f_r \right\}$. We will show that $f_1$ is the minimum element of $N$. $\forall \mu \in N$, $\mu = s_1 f_1 + \cdots + s_r f_r$ using $s_i \in R$. Since $\mu, f_1, \cdots, f_r$ are monomials, we have $\mu = s f_i$ for some $i$ and $s \in R$. (Think about the computation of the right hand side. ) Then, $\mu = s f_i \geq f_i \geq f_1$. Thus, $f_1$ is the minimum element of $N$.
+\end{pfsp}
+
+As the last of this section, we define the following important concepts.
+
+\begin{statementsp}<def>[initialmonomial](Initial and Initial ideal)
+    For a non zero polynomial $f \in R$, we define the \textit{initial} of $f$ by
+    \begin{align}
+        \mathrm{in}_{\leq}(f) = \max_{\leq} \mathrm{Supp}(f)
+    \end{align}
+    Note that $\mathrm{in}_{\leq}(f)$ is a monomial with coefficient $1$. And we define the \textit{initial term} of $f$ is the largest term of $f$ under the monomial order. We write this $\mathrm{init}_{\leq}(f)$. We often omit the subscript $\leq$ if there is no confusion.\\ 
+    We can easily check that $\mathrm{in}(fg) = \mathrm{in}(f) \mathrm{in}(g)$, $\mathrm{in}(f+g) \leq \max(\mathrm{in}(f), \mathrm{in}(g))$ for $f,g \in R \setminus \left\{ 0 \right\}$.
+
+    For an ideal $I$ of $R$, we define the \textit{initial ideal} of $I$ by
+    \begin{align}
+        \mathrm{in}_{\leq}(I) = \left( \mathrm{in}_{\leq}(f) \mid f \in I \setminus \left\{ 0 \right\} \right)
+    \end{align}
+    We often omit the subscript $\leq$ if there is no confusion, $\mathrm{in}(I)$.
+\end{statementsp}
+
+In the later sections, we will see that many of concepts in polynomial rings is invariant under taking an initial. And we show the following proposition. This proposition may be used to extend the results for ideals to vector spaces. When we consider an ideal $I$ as $K$-vector space, we may define $\mathrm{in}(I)$ as a $K$- vector space generated by $\left\{ \mathrm{in}(f) \mid f \in I \setminus \left\{ 0 \right\} \right\}$ not as an ideal. However, these two ways of taking initials, as a $K$-vector space and as an ideal, actually coincide.
+
+\begin{statementsp}<prop>[]()
+    For an ideal $I$ of $R$, the initial ideal $\mathrm{in}(I)$ is equal to the $K$-vector space generated by $\left\{ \mathrm{in}(f) \mid f \in I \setminus \left\{ 0 \right\} \right\}$.
+\end{statementsp}
+\begin{pfsp}
+    Let $V$ be the $K$-vector space generated by $\left\{ \mathrm{in}(f) \mid f \in I \setminus \left\{ 0 \right\} \right\}$. It is enough to show $V \subset \mathrm{in}(I)$. Take $f = g_1 \mu_1 + \cdots + g_r \mu_r \in \mathrm{in}(I)$. Here, $g_i \in R$. Assume $\mu_i = \mathrm{in}(f_i) \quad (f_i \in I)$ and 
+    \begin{align}
+        g_i = a_{i1} \mu_{i1} + \cdots + a_{ir_i} \mu_{ir_i} \quad (a_{ij} \in K \setminus \left\{ 0 \right\}, \mu_{ij} \in \mathrm{Mon}(R))
+    \end{align}
+    Then, we have
+    \begin{align}
+        f &= \sum_{i=1}^{r} g_i \mu_i \\ 
+        &= \sum_{i=1}^{r} \left( \sum_{j=1}^{r_i} a_{ij} \mu_{ij} \right) \mu_i \\
+        &= \sum_{i=1}^{r} \sum_{j=1}^{r_i} a_{ij} \mu_{ij} \mathrm{in}(f_i) \\ 
+        &= \sum_{i=1}^{r} \sum_{j=1}^{r_i} a_{ij} \mathrm{in}(\mu_{ij} f_i) \in V
+    \end{align}
+    And we can see that $\mu_{ij} f_i \in I$. Thus, we have $f \in V$.
+\end{pfsp}
+
+\newpage 
+
+\section{The Gr\"{o}bner Basis}
+In this section, let $K$ be a field and $R = K[x_1, \ldots, x_n]$ be the polynomial ring in $n$ variables over $K$. And we fix a monomial order $\leq$ on $R$. \\ 
+Let us now define the Gr\"{o}bner basis.
+
+\begin{statementsp}<def>[grobnerbasis](Gr\"{o}bner Basis)
+    For an ideal $I$ of $R$, a finite subset $\left\{ f_1, \ldots, f_r \right\}$ of $I \setminus \left\{ 0 \right\}$ is called a \textit{Gr\"{o}bner basis} of $I$ if 
+    \begin{align}
+        \mathrm{in}(I) = \left( \mathrm{in}(f_1), \ldots, \mathrm{in}(f_r) \right)
+    \end{align}
+    holds.
+\end{statementsp}
+
+Note that we call such a set basis though it may not be a linearly independent set. When this set is a generator system of $\mathrm{in}(I)$, we call it a \textit{Gr\"{o}bner basis} of $I$.\\ 
+Of course, in general, $$\mathrm{in}(I) \supset \left( \mathrm{in}(f_1), \ldots, \mathrm{in}(f_r) \right)$$ holds. Thus, to check whether a given finite subset of $I$ is a Gr\"{o}bner basis or not, we have to check the opposite inclusion. However, it is not easy to check this inclusion directly. When does the given finite subset become a Gr\"{o}bner basis? How to find the Gr\"{o}bner basis? We will answer these questions in the next section.\\ 
+As the first step, we show some theoretic properties of the Gr\"{o}bner basis. The first one is the existence of the Gr\"{o}bner basis.
+
+\begin{statementsp}<prop>[grobnerbasisexists](Existence of the Gr\"{o}bner Basis)
+    For any ideal $I$ of $R$, there exists a Gr\"{o}bner basis of $I$.
+\end{statementsp}
+\begin{pfsp}
+    Since $R$ is noetherian by Hilbert's basis theorem, $\mathrm{in}(I)$ is finitely generated. And by \refsp{prop:noegen}, there exists a finite subset $\left\{ f_1, \ldots, f_r \right\}$ of $I \setminus \left\{ 0 \right\}$ such that $\mathrm{in}(I) = \left( \mathrm{in}(f_1), \ldots, \mathrm{in}(f_r) \right)$. Thus, $\left\{ f_1, \ldots, f_r \right\}$ is a Gr\"{o}bner basis of $I$.
+\end{pfsp}
+
+\begin{statementsp}<def>[reduction](Reduction)
+    Let $f, f_1, \ldots, f_m \in R \setminus \left\{ 0 \right\}$. We say that $r$ is the \textit{reduction} of $g$ mod $f_1, \ldots, f_m$ if there exist $q_1, \ldots, q_m \in R$ such that
+    \begin{enumerate}
+        \item $g = q_1 f_1 + \cdots + q_m f_m + r$
+        \item $\forall i, \quad \mathrm{in}(q_i f_i) \leq \mathrm{in}(g)$
+        \item $\mathrm{Supp}(r) \cap (\mathrm{in}(f_1), \ldots, \mathrm{in}(f_m)) = \emptyset$
+    \end{enumerate}
+    The last condition is in other words, no term of $r$ is divisible by any of $\mathrm{in}(f_1), \ldots, \mathrm{in}(f_m)$.
+\end{statementsp}
+
+The reason why we introduce this concept, reduction, is reffffff holds. Before showing this theorem, we prepare the following proposition.
+
+\begin{statementsp}<prop>[]()
+    There is the reduction $r \in R$ of $\forall g \in R$ mod $f_1, \ldots, f_m \in R \setminus \left\{ 0 \right\}$.
+\end{statementsp}
+\begin{pfsp}
+    We put $J = \left( \mathrm{in}(f_1), \cdots, \mathrm{in}(f_m) \right)$ and $r = g$ at first. And then we use the reduction algorithm.
+    \begin{enumerate}
+        \item If $\mathrm{Supp}(r) \cap J = \emptyset$, then $r$ satisfy the conditions of the reduction. Thus, we finish the algorithm.
+        \item If not, we can find $\mu \in \mathrm{Supp}(r) \cap J$. We take the maximum $\mu$ under $\leq$. And we can find $i$ such that $\mathrm{in}(f_i) \vert \mu$. We put $\displaystyle{r' = r - \frac{a_{\mu} \mu}{\mathrm{init}(f_i)} f_i}$ where $a_{\mu}$ is the coefficient of $\mu$ in $r$. i.e. we kill the term $\mu$ in $r$ by using $f_i$. 
+    \end{enumerate}
+    This algorithm halts in finite steps because $\mu$ took in step 2 strictly decreases under $\leq$ and there is no infinite descending chain by \refsp{prop:ACC}. More precisely, in the next step, you may use $r'$ instead of $r$. 
+    \begin{align}
+        r' = r - \frac{a_{\mu} \mu}{\mathrm{init}(f_i)} f_i = (r - a_{\mu} \mu) - \frac{a_{\mu} \mu}{\mathrm{init}(f_i)} \left( f_i - \mathrm{init}(f_i) \right)
+    \end{align}
+    On the former term, $(r-a_{\mu} \mu)$, if we go to the next step, 
+\end{pfsp}
+
+\newpage 
+
+\bibliography{references}{}
+\bibliographystyle{alpha}
+
+\end{document}
