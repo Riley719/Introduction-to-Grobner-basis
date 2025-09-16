@@ -5,9 +5,9 @@
 % Page settings
 \usepackage[margin=20mm]{geometry}
 \usepackage{titletoc}
-\titlecontents{section}[0em]{\vspace{15pt}}{}{}
+\titlecontents{section}[0em]{\vspace{15pt}}{\thecontentslabel \quad}{}
     {\ \ \titlerule*{.}\makebox[2em][r]{\thecontentspage}}
-\titlecontents{subsection}[1em]{}{}{}
+\titlecontents{subsection}[1em]{}{\thecontentslabel \quad}{}
     {\ \ \titlerule*{.}\makebox[2em][r]{\thecontentspage}}
 \makeatletter
 \renewcommand{\tableofcontents}{%
@@ -16,7 +16,7 @@
 }
 \makeatother
 \usepackage{titlesec}
-\titlelabel{}
+% \titlelabel{}
 \usepackage{cite}
 
 
@@ -68,13 +68,16 @@
 \newcommand{\ds}[1]{\displaystyle{#1}}
 \usepackage[hyphens]{url}
 \renewcommand{\refname}{}
-\lhead{\leftmark \  \rightmark}
+\lhead{\thesection \quad \leftmark}
 \chead{}
 \rhead{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
 \lfoot{\hyperlink{toc_page}{Jump to Table of Contents}}
 \rfoot{© Riley}
 \renewcommand{\sectionmark}[1]{\xdef\leftmark{#1}\xdef\rightmark{}}
 \renewcommand{\subsectionmark}[1]{\xdef\rightmark{#1}}
+\usepackage{cancel}
 
 % Enumerating setting
 \usepackage[at]{easylist}
@@ -146,7 +149,7 @@
 \section{Introduction}
 The Gr\"{o}bner basis is said to be introduced by Bruno Buchberger, a computer scientist, in 1965, and named them after his advisor Wolfgang Gr\"{o}bner. As its name, it is like a basis of an ideal of a polynomial ring. We will show that we can compute the generators of a given ideal by using the Gr\"{o}bner basis. By using this computation, mathematicians often use the Gr\"{o}bner basis to compute the generators of an ideal by using a computer. However, the Gr\"{o}bner basis is not only useful for such a computational tool. It is also useful for theoretical aspects. For example, we will show that many of concepts in polynomial rings is invariant under taking an \textit{initial}.
 
-This document is based on the 20th summer school of commutative ring theory in Osaka university in 2025. In this summer school, we read \cite{Bruns2022} mainly. You can access the site of the summer school. \url{https://sites.google.com/view/comm-ring-summer-school-2025/%E3%83%9B%E3%83%BC%E3%83%A0?authuser=0}
+This document is based on the 20th summer school of commutative ring theory in Osaka university in 2025. In this summer school, we read \cite{Bruns2022} mainly. You can access \href{https://sites.google.com/view/comm-ring-summer-school-2025/%E3%83%9B%E3%83%BC%E3%83%A0?authuser=0}{the site of the summer school}. 
 
 \newpage
 
@@ -221,7 +224,7 @@ The readers may know Hilbert's basis theorem. By using this theorem, we can show
 \end{pfsp}
 
 \begin{statementsp}<prop>[ACC](Monomial Order is well-order)
-    The monomial order on $R$ is a well-order, i.e., every non empty subset of $\mathrm{Mon}(R)$ has the minimal element. In particular, there is no infinite descending chain
+    The monomial order on $R$ is a well-order, i.e., every non empty subset of $\mathrm{Mon}(R)$ has the minimum element. In particular, there is no infinite descending chain
     \begin{align}
         \mu_1 > \mu_2 > \mu_3 > \cdots
     \end{align}
@@ -292,6 +295,18 @@ As the first step, we show some theoretic properties of the Gr\"{o}bner basis. T
     Since $R$ is noetherian by Hilbert's basis theorem, $\mathrm{in}(I)$ is finitely generated. And by \refsp{prop:noegen}, there exists a finite subset $\left\{ f_1, \ldots, f_r \right\}$ of $I \setminus \left\{ 0 \right\}$ such that $\mathrm{in}(I) = \left( \mathrm{in}(f_1), \ldots, \mathrm{in}(f_r) \right)$. Thus, $\left\{ f_1, \ldots, f_r \right\}$ is a Gr\"{o}bner basis of $I$.
 \end{pfsp}
 
+The reason why the Gr\"{o}bner basis is important is the followwing theorem holds. By the following, we can compute the generators of an given ideal if we can get the Gr\"{o}bner basis of the ideal.
+
+\begin{statementsp}<th>[grobnerbasisgen](Th e Gr\"{o}bner Basis is a Generator System)
+    Let $n'$ be a positive integer such that $n' \leq n$ and $R' = K[x_1, \ldots, x_{n'}] \subset R$. For an ideal $I$ of $R$, if $S = \left\{ f_1, \ldots, f_r \right\}$ is a Gr\"{o}bner basis of $I$, then $I \cap R' = (f_1, \ldots, f_r) \cap R'$. In particular, the Gr\"{o}bner basis of $I$ is a generator system of $I \cap R$.
+    Let the monomial order be with $x_1 < x_2 < \cdots < x_n$.
+\end{statementsp}
+\begin{pfsp}
+    Let $f \in I \cap R'$. Then we have $\mathrm{in}(f) \in \mathrm{in}(I) = \left( \mathrm{in}(f_1), \cdots, \mathrm{in}(f_r) \right) R$. Thus, we can take $i$ such that $\mathrm{in}(f_i) \vert \mathrm{in}(f)$, i.e. $\mathrm{in}(f) = cq \cdot \mathrm{in}(f_i)$ for some $c \in K, q \in \mathrm{Mon}(R')$. Clearly $\mathrm{in}(f) \in R'$. Thus, $\mathrm{in}(f_i) \in R'$. Because of $x_1 < \cdots  x_n$, $f_i$ has only variables $x_1, \ldots, x_{n'}$. Thus, $f_i \in R'$. We consider $f - cq f_i$. If $f - cq f_i = 0$, then we have $f \in (f_1, \ldots, f_r) \cap R'$. If not, we have $\mathrm{in}(f - cq f_i) < \mathrm{in}(f)$ and $f - cq f_i \in I \cap R'$. Thus, we can repeat the same argument for $f - cq f_i$ instead of $f$. By \refsp{prop:ACC}, this algorithm halts in finite steps. Therefore, we have $f \in (f_1, \ldots, f_r) \cap R'$.
+\end{pfsp}
+
+By above theorem, Let $S = \left\{ f_1, \cdots, f_r \right\}$ be the Gr\"{o}bner basis of a given ideal $I$ of $R$. i.e. $$\mathrm{in}(I) = \left( \mathrm{in}(f_1), \ldots, \mathrm{in}(f_r) \right)$$ holds. Then, we have $I = (f_1, \ldots, f_r)$. 
+
 \begin{statementsp}<def>[reduction](Reduction)
     Let $f, f_1, \ldots, f_m \in R \setminus \left\{ 0 \right\}$. We say that $r$ is the \textit{reduction} of $g$ mod $f_1, \ldots, f_m$ if there exist $q_1, \ldots, q_m \in R$ such that
     \begin{enumerate}
@@ -302,9 +317,9 @@ As the first step, we show some theoretic properties of the Gr\"{o}bner basis. T
     The last condition is in other words, no term of $r$ is divisible by any of $\mathrm{in}(f_1), \ldots, \mathrm{in}(f_m)$.
 \end{statementsp}
 
-The reason why we introduce this concept, reduction, is reffffff holds. Before showing this theorem, we prepare the following proposition.
+The reason why we introduce this concept, reduction, is reffffff holds. And we can use to the proof of the existence of \textit{reduced Gr\"{o}bner basis}, reffffff. Before showing these properties, we prepare the following proposition.
 
-\begin{statementsp}<prop>[]()
+\begin{statementsp}<prop>[reductionexists]()
     There is the reduction $r \in R$ of $\forall g \in R$ mod $f_1, \ldots, f_m \in R \setminus \left\{ 0 \right\}$.
 \end{statementsp}
 \begin{pfsp}
@@ -313,12 +328,122 @@ The reason why we introduce this concept, reduction, is reffffff holds. Before s
         \item If $\mathrm{Supp}(r) \cap J = \emptyset$, then $r$ satisfy the conditions of the reduction. Thus, we finish the algorithm.
         \item If not, we can find $\mu \in \mathrm{Supp}(r) \cap J$. We take the maximum $\mu$ under $\leq$. And we can find $i$ such that $\mathrm{in}(f_i) \vert \mu$. We put $\displaystyle{r' = r - \frac{a_{\mu} \mu}{\mathrm{init}(f_i)} f_i}$ where $a_{\mu}$ is the coefficient of $\mu$ in $r$. i.e. we kill the term $\mu$ in $r$ by using $f_i$. 
     \end{enumerate}
-    This algorithm halts in finite steps because $\mu$ took in step 2 strictly decreases under $\leq$ and there is no infinite descending chain by \refsp{prop:ACC}. More precisely, in the next step, you may use $r'$ instead of $r$. 
+    This algorithm halts in finite steps because $\mu$ took in step 2 strictly decreases under $\leq$ and there is no infinite descending chain by \refsp{prop:ACC}. More precisely, in the next step, you may use $r'$ instead of $r$. And we have
     \begin{align}
         r' = r - \frac{a_{\mu} \mu}{\mathrm{init}(f_i)} f_i = (r - a_{\mu} \mu) - \frac{a_{\mu} \mu}{\mathrm{init}(f_i)} \left( f_i - \mathrm{init}(f_i) \right)
     \end{align}
-    On the former term, $(r-a_{\mu} \mu)$, if we go to the next step, 
+    On the former term, $(r-a_{\mu} \mu)$, this has only monomials which is strictly less than that of $r$. And we have
+    \begin{align}
+        \mathrm{in} \left( \frac{a_{\mu} \mu}{\mathrm{init}(f_i)} \left( f_i - \mathrm{init}(f_i) \right) \right) < \mathrm{in} \left( \frac{a_{\mu} \mu}{\mathrm{init}(f_i)} \mathrm{in}(f_i) \right) = \mu
+    \end{align}
+    Therefore, when we go to the next step, $\mu \in \mathrm{Supp}(r') \cap J$ took from step 2 strictly decreases under $\leq$. Thus, this algorithm halts in finite steps.\\ 
+    The algorithm proceeds as follow. 
+    \begin{enumerate}
+        \item[$0$.] $\displaystyle{r_0=g}$
+        \item[$1$.] $\displaystyle{r_1 = r_0 - \frac{a_{\mu_1} \mu_1}{\mathrm{init}(f_{i_1})} f_{i_1}}$
+        \item[$2$.] $\displaystyle{r_2 = r_1 - \frac{a_{\mu_2} \mu_2}{\mathrm{init}(f_{i_2})} f_{i_2}}$
+        \item[] $\vdots$
+        \item[$k$.] $\displaystyle{r_k = r_{k-1} - \frac{a_{\mu_k} \mu_k}{\mathrm{init}(f_{i_k})} f_{i_k}}$
+        \item[] $\mathrm{Supp}(r_k) \cap J = \emptyset$ i.e. Algorithm halts.
+    \end{enumerate}
+    So, by simplifying above, we have $g = q_1 f_1 + \cdots + q_m f_m + r_k$. Let $r = r_k$ eventually. And $q$ is finite summation of the form $\displaystyle{\frac{a_{\mu_j} \mu_j}{\mathrm{init}(f_{i_j})}}$. So we can check $$\mathrm{in}(q_i f_i) \leq \mathrm{in}(g)$$ holds. Thus, $r$ is the reduction of $g$ mod $f_1, \ldots, f_m$.
 \end{pfsp}
+
+To show the theorem reffffff, we need to study the Buchberger's criterion and Algorithm. So, this is proved in the next section. \\ 
+As the last of this section, we introduce the concept of the \textit{reduced Gr\"{o}bner basis} and we show the existence and uniqueness of this. 
+
+\begin{statementsp}<def>[reducedgrobnerbasis](Reduced Gr\"{o}bner Basis)
+    A Gr\"{o}bner basis $G = \left\{ g_1, \ldots, g_t \right\}$ of an ideal $I$ of $R$ is called a \textit{reduced Gr\"{o}bner basis} if the following conditions hold.
+    \begin{enumerate}
+        \item $\forall i, \quad$ the coefficient of $\mathrm{in}(g_i)$ in $g_i$ is $1$. 
+        \item If $i \neq j$, then none of the monomials of $\mathrm{Supp}(g_i)$ is divisible by $\mathrm{in}(g_j)$. 
+    \end{enumerate}
+\end{statementsp}
+
+The second condition is equivalent to that $\mathrm{Supp}(g_i) \cap \left(  \mathrm{in}(g_j) \right) = \emptyset$ for all $j \neq i$.\\ 
+The reduced Gr\"{o}bner basis may be truely basis under the meaning of the following theorem. 
+
+\begin{statementsp}<th>[reducedgrobnerbasisexistsuniqueness](Existence and Uniqueness of the Reduced Gr\"{o}bner Basis)
+    For any ideal $I$ of $R$, there exists uniquely a reduced Gr\"{o}bner basis of $I$.
+\end{statementsp}
+\begin{pfsp}
+    (Existence) We can take a Gr\"{o}bner basis of $I$, $G = \left\{ g_1, \ldots, g_s \right\}$ owing to \refsp{prop:grobnerbasisexists}. And we can assume $\left\{ \mathrm{in}(g_1), \cdots, \mathrm{in}(g_s) \right\}$ is a minimal generator system of $\mathrm{in}(I)$.\\
+    At first, we can take the reduction $h_1$ of $g_1$ mod $g_2, \ldots, g_s$ by \refsp{prop:reductionexists}.
+    \begin{align}
+        g_1 = q_{12} g_2 + \cdots + q_{1s} g_s + h_1\\ 
+        \mathrm{in}(q_{1i} g_i) \leq \mathrm{in}(g_1) \quad (i=2, \ldots, s)\\ 
+        \mathrm{Supp}(h_1) \cap (\mathrm{in}(g_2), \ldots, \mathrm{in}(g_s)) = \emptyset
+    \end{align}
+    Clearly, $h_1 \in (g_1, \cdots, g_s) \subset I$. And we have
+    \begin{align}
+        \mathrm{in}(g_1) &= \mathrm{in}(q_{12}g_2 + \cdots + q_{1s} g_s + h_1) \\
+        &\leq \max(\mathrm{in}(q_{12} g_2), \ldots, \mathrm{in}(q_{1s} g_s), \mathrm{in}(h_1))
+    \end{align}
+    If we have $\max(\mathrm{in}(q_{12} g_2), \ldots, \mathrm{in}(q_{1s} g_s), \mathrm{in}(h_1)) = \mathrm{in}(q_{1i}g_i)$ for some $i$, then $\mathrm{in}(g_1) \leq \mathrm{in}(q_{1i} g_i) \leq \mathrm{in}(g_1)$. Thus, $\mathrm{in}(g_1) = \mathrm{in}(q_{1i} g_i)$, which contradicts the minimality of $G$. Therefore, we have
+    \begin{align}
+        \max(\mathrm{in}(q_{12} g_2), \ldots, \mathrm{in}(q_{1s} g_s), \mathrm{in}(h_1)) = \mathrm{in}(h_1)
+    \end{align}
+    Thus, we have $\mathrm{in}(g_1) = \mathrm{in}(h_1)$. then, we replace $g_1$ by $h_1$. And we can repeat the same argument for $g_2$. Namely, we have the follows.
+    \begin{align}
+        g_2 &= q_{21} h_1 + q_{23} g_3 + \cdots + q_{2s} g_s + h_2\\ 
+        \mathrm{in}(q_{2i} g_i) &\leq \mathrm{in}(g_2) \quad (i=1,3,\ldots,s)\\ 
+        \mathrm{Supp}(h_2) &\cap (\mathrm{in}(h_1), \mathrm{in}(g_3), \ldots, \mathrm{in}(g_s)) = \emptyset
+    \end{align}
+    In this point, $Supp(h_1) \cap (\mathrm{in}(h_2), \mathrm{in}(g_3), \ldots, \mathrm{in}(g_s)) = \emptyset$ is still hold. So we can replace $g_2$ by $h_2$ similar to $g_1$. And we can repeat this argument for $g_3, \ldots, g_s$. Finally, we replace the replaced $g_i$ by $\displaystyle{\frac{1}{\text{the coefficient of } \mathrm{in}(g_i) \text{ in } g_i} g_i}$ for all $i$ to set the initial coefficients to $1$. These $g_i$ satisfy follows. 
+    \begin{enumerate}
+        \item $\mathrm{in}(I) = (\mathrm{in}(g_1), \ldots, \mathrm{in}(g_s))$
+        \item The coefficient of $\mathrm{in}(g_i)$ in $g_i$ is $1$ for all $i$.
+        \item $\mathrm{Supp}(g_i) \cap (\mathrm{in}(g_1), \ldots, \mathrm{in}(g_{i-1}), \mathrm{in}(g_{i+1}), \ldots, \mathrm{in}(g_s)) = \emptyset$ for all $i$.
+    \end{enumerate}
+    It is nothing else but this is a reduced Gr\"{o}bner basis of $I$.\\ 
+    (Uniqueness) Let $G = \left\{ g_1, \ldots, g_s \right\}$ and $G' = \left\{ g_1', \ldots, g_t' \right\}$ be reduced Gr\"{o}bner basis of $I$. Then, we have $\mathrm{in}(I) = (\mathrm{in}(g_1), \ldots, \mathrm{in}(g_s)) = (\mathrm{in}(g_1'), \ldots, \mathrm{in}(g_t'))$. Thus, we have $s = t$ (Actually, a finite graded $R$-module $M$ and $\mathfrak{m}$ satisfy NAK, Nakayama's Lemma. So the number of minimal generator of $\mathrm{in}(I)$ is constant. See The Stacks Project \cite{stacks-project0EKB}) And by minimality, we can assume $\mathrm{in}(g_i) = \mathrm{in}(g_i')$ for all $i$. We will show $g_i = g_i'$ for all $i$. We take $i$ arbitrarily. If $g_i \neq g_i'$, then we can take $0 \neq g_i - g_i' \in I$. We have $\mathrm{in}(g_i - g_i') \in \mathrm{in}(I)$. And we have $\mathrm{in}(g_i - g_i') < \mathrm{in}(g_i)$ because initial terms of $g_i$ and $g_i'$ are killed each other. In particular, $\mathrm{in}(g_i - g_i')$ can not be divisible by $\mathrm{in}(g_i)$. In other case, $j \neq i$, since $\mathrm{Supp}(g_i - g_i') \subset \mathrm{Supp}(g_i) \cup \mathrm{Supp}(g_i')$ and none of the monomials of $\mathrm{Supp}(g_i) \cup \mathrm{Supp}(g_i')$ can not be divisible by $\mathrm{in}(g_j)$. Thus, $\mathrm{in}(g_i - g_i')$ is fortiori unable to be divisible by $\mathrm{in}(g_j)$. Therefore, $\mathrm{in}(g_i - g_i') \notin \mathrm{in}(I)$. This is a contradiction. Thus, we have $g_i = g_i'$ for all $i$.
+\end{pfsp}
+
+By using above theorem, we can see that the inclusion or equality of two ideals is stable under taking initials.
+
+\begin{statementsp}<cor>[]()
+    For ideals $I, J$ of $R$, the following holds.
+    \begin{enumerate}
+        \item $I \subset J \iff \mathrm{in}(I) \subset \mathrm{in}(J)$
+        \item $I = J \iff \mathrm{in}(I) = \mathrm{in}(J)$
+    \end{enumerate}
+\end{statementsp}
+\begin{pfsp}
+    (1) The direction $\implies$ is clear. We will show the direction $\impliedby$. Let $G = \left\{ g_1, \ldots, g_s \right\}$ be the reduced Gr\"{o}bner basis of $I$. By definition of the reduced Gr\"{o}bner basis, \refsp{def:reducedgrobnerbasis}, $G$ is a part of the reduced Gr\"{o}bner basis of $J$. Thus, by extending $G$ if necessary, we can take the reduced Gr\"{o}bner basis of $J$, $G' = \left\{ g_1, \ldots, g_s, g_{s+1}, \ldots, g_t \right\}$. Then, we have $I = (g_1, \ldots, g_s) \subset (g_1, \ldots, g_s, g_{s+1}, \ldots, g_t) = J$ by \refsp{th:grobnerbasisgen}.\\
+    (2) This follows from (1).
+\end{pfsp}
+
+In the next section, we see the Buchberger's criterion and algorithm. it is said that you should go to and learn them if you study the theory of the Gr\"{o}bner basis. 
+
+\newpage 
+
+\section{The Buchberger's Criterion and Algorithm}
+In this section, let $K$ be a field and $R = K[x_1, \ldots, x_n]$ be the polynomial ring in $n$ variables over $K$. And we fix a monomial order $\leq$ on $R$. 
+
+In the previous sections, we saw the definition and some basic properties of the Gr\"{o}bner basis. However, those are the properties when we can get the Gr\"{o}bner basis. So, how can we find the Gr\"{o}bner basis of a given ideal? The Buchberger's criterion and algorithm answer this question. in this theory, the concept of the $S$-polynomial is important.
+
+\begin{statementsp}<def>[Spolynomial]($S$-polynomial)
+    For $f, g \in R \setminus \left\{ 0 \right\}$, we define the \textit{$S$-polynomial} of $f$ and $g$ by
+    \begin{align}
+        S(f,g) = \frac{\mathrm{lcm}(\mathrm{in}(f), \mathrm{in}(g))}{\mathrm{init}(f)} f - \frac{\mathrm{lcm}(\mathrm{in}(f), \mathrm{in}(g))}{\mathrm{init}(g)} g
+    \end{align}
+    Here, $\mathrm{lcm}(\mu, \nu)$ is the least common multiple of monomials $\mu$ and $\nu$. 
+\end{statementsp}
+
+The $S$-polynomial of $f$ and $g$ is a polynomial which is made by being canceled the initial terms of $f$ and $g$ each other. The following example may be helpful to understand the construction of the $S$-polynomial.
+
+\begin{statementsp}<ex>[]()
+    Let $R = \mathbb{Q}[x,y,z]$ and consider the lex order with $x > y > z$. We take $f = 4x^2yz + 2xy^2 + xz^2, g = 3yz^2 - z + 5$. Then, we have $\mathrm{in}(f) = x^2yz, \mathrm{in}(g) = yz^2$ and $\mathrm{lcm}(\mathrm{in}(f), \mathrm{in}(g)) = x^2yz^2$. Thus, we have
+    \begin{align}
+        S(f,g) &= \frac{x^2yz^2}{4x^2yz} f - \frac{x^2yz^2}{3yz^2} g \\
+        &= \frac{1}{4} z (4x^2yz + 2xy^2 + xz^2) - \frac{1}{3} x^2 (3yz^2 - z + 5) \\
+        &= x^2yz^2 + \frac{1}{2} xyz^2 + \frac{1}{4} xz^3 - x^2yz^2 + \frac{1}{3} x^2 z - \frac{5}{3} x^2 \\
+        &= \cancel{x^2yz^2} + \frac{1}{2} xyz^2 + \frac{1}{4} xz^3 - \cancel{x^2yz^2} + \frac{1}{3} x^2 z - \frac{5}{3} x^2 \\
+        &= \frac{1}{2} xyz^2 + \frac{1}{4} xz^3 + \frac{1}{3} x^2 z - \frac{5}{3} x^2
+    \end{align}
+\end{statementsp}
+
+
 
 \newpage 
 
