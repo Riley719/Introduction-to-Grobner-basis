@@ -151,6 +151,8 @@ The Gr\"{o}bner basis is said to be introduced by Bruno Buchberger, a computer s
 
 This document is based on the 20th summer school of commutative ring theory in Osaka university in 2025. In this summer school, we read \cite{Bruns2022} mainly. You can access \href{https://sites.google.com/view/comm-ring-summer-school-2025/%E3%83%9B%E3%83%BC%E3%83%A0?authuser=0}{the site of the summer school}. 
 
+And \cite{Herzog2011} is our friendly book about the Gr\"{o}bner basis. 
+
 \newpage
 
 \section{Monomial Orders}
@@ -240,7 +242,7 @@ As the last of this section, we define the following important concepts.
     \begin{align}
         \mathrm{in}_{\leq}(f) = \max_{\leq} \mathrm{Supp}(f)
     \end{align}
-    Note that $\mathrm{in}_{\leq}(f)$ is a monomial with coefficient $1$. And we define the \textit{initial term} of $f$ is the largest term of $f$ under the monomial order. We write this $\mathrm{init}_{\leq}(f)$. We often omit the subscript $\leq$ if there is no confusion.\\ 
+    Note that $\mathrm{in}_{\leq}(f)$ is a monomial with coefficient $1$. And we define the \textit{initial term} of $f$ is the largest term of $f$ under the monomial order. We write this $\mathrm{init}_{\leq}(f)$. And let $\mathrm{inic}(f)$ be the coefficient of this. We often omit the subscript $\leq$ if there is no confusion.\\ 
     We can easily check that $\mathrm{in}(fg) = \mathrm{in}(f) \mathrm{in}(g)$, $\mathrm{in}(f+g) \leq \max(\mathrm{in}(f), \mathrm{in}(g))$ for $f,g \in R \setminus \left\{ 0 \right\}$.
 
     For an ideal $I$ of $R$, we define the \textit{initial ideal} of $I$ by
@@ -297,7 +299,7 @@ As the first step, we show some theoretic properties of the Gr\"{o}bner basis. T
 
 The reason why the Gr\"{o}bner basis is important is the followwing theorem holds. By the following, we can compute the generators of an given ideal if we can get the Gr\"{o}bner basis of the ideal.
 
-\begin{statementsp}<th>[grobnerbasisgen](Th e Gr\"{o}bner Basis is a Generator System)
+\begin{statementsp}<th>[grobnerbasisgen](The Gr\"{o}bner Basis is a Generator System)
     Let $n'$ be a positive integer such that $n' \leq n$ and $R' = K[x_1, \ldots, x_{n'}] \subset R$. For an ideal $I$ of $R$, if $S = \left\{ f_1, \ldots, f_r \right\}$ is a Gr\"{o}bner basis of $I$, then $I \cap R' = (f_1, \ldots, f_r) \cap R'$. In particular, the Gr\"{o}bner basis of $I$ is a generator system of $I \cap R$.
     Let the monomial order be with $x_1 < x_2 < \cdots < x_n$.
 \end{statementsp}
@@ -317,7 +319,7 @@ By above theorem, Let $S = \left\{ f_1, \cdots, f_r \right\}$ be the Gr\"{o}bner
     The last condition is in other words, no term of $r$ is divisible by any of $\mathrm{in}(f_1), \ldots, \mathrm{in}(f_m)$.
 \end{statementsp}
 
-The reason why we introduce this concept, reduction, is reffffff holds. And we can use to the proof of the existence of \textit{reduced Gr\"{o}bner basis}, reffffff. Before showing these properties, we prepare the following proposition.
+We can use to the proof of the existence of \textit{reduced Gr\"{o}bner basis}. Before showing these properties, we prepare the following proposition.
 
 \begin{statementsp}<prop>[reductionexists]()
     There is the reduction $r \in R$ of $\forall g \in R$ mod $f_1, \ldots, f_m \in R \setminus \left\{ 0 \right\}$.
@@ -349,7 +351,6 @@ The reason why we introduce this concept, reduction, is reffffff holds. And we c
     So, by simplifying above, we have $g = q_1 f_1 + \cdots + q_m f_m + r_k$. Let $r = r_k$ eventually. And $q$ is finite summation of the form $\displaystyle{\frac{a_{\mu_j} \mu_j}{\mathrm{init}(f_{i_j})}}$. So we can check $$\mathrm{in}(q_i f_i) \leq \mathrm{in}(g)$$ holds. Thus, $r$ is the reduction of $g$ mod $f_1, \ldots, f_m$.
 \end{pfsp}
 
-To show the theorem reffffff, we need to study the Buchberger's criterion and Algorithm. So, this is proved in the next section. \\ 
 As the last of this section, we introduce the concept of the \textit{reduced Gr\"{o}bner basis} and we show the existence and uniqueness of this. 
 
 \begin{statementsp}<def>[reducedgrobnerbasis](Reduced Gr\"{o}bner Basis)
@@ -443,7 +444,94 @@ The $S$-polynomial of $f$ and $g$ is a polynomial which is made by being cancele
     \end{align}
 \end{statementsp}
 
+We can use the \refsp{th:buchbergercriterion}, Buchberger's criterion, to check whether a given finite subset of an ideal $I$ is a Gr\"{o}bner basis of $I$ or not.\\ 
+To show this theorem, we need the following lemma.
 
+\begin{statementsp}<lem>[S-polycomb]()
+    Let $\mu \in \mathrm{Mon}(R)$, $g_1, \cdots, g_t \in R \setminus \left\{ 0 \right\}$, $c_1, \cdots, c_t \in K$. Assume that $\mathrm{in}(g_1), \cdots, \mathrm{in}(g_t) = \mu$. If $\displaystyle{\mathrm{in}\left( \sum_i c_i g_i \right) < \mu}$, then $\displaystyle{\sum_i c_i g_i}$ can be written as a linear combination of $S(g_i, g_j)$'s with coefficients in $K$.
+\end{statementsp}
+\begin{pfsp}
+    We can assume $\mathrm{init}(g_i) = \mu$ for all $i$. Then, we have
+    \begin{align}
+        S(g_i, g_j) = g_i - g_j
+    \end{align}
+    And by $\displaystyle{\mathrm{in}\left( \sum_i c_i g_i \right) < \mu}$, we have $\sum_i c_i = 0$. Thus, we have
+    \begin{align}
+        \sum_i c_i g_i = \sum_i c_i (g_i - g_1) = \sum_i c_i S(g_i, g_1)
+    \end{align}
+\end{pfsp} 
+
+\begin{statementsp}<th>[buchbergercriterion](Buchberger's Criterion)
+    For an ideal $I$ of $R$ and a finite system of generators $G = \left\{ g_1, \ldots, g_t \right\}$ of $I \setminus \left\{ 0 \right\}$, the following are equivalent.
+    \begin{enumerate}
+        \item $G$ is a Gr\"{o}bner basis of $I$.
+        \item $\forall i,j, \quad S(g_i, g_j)$ has the reduction $0$ mod $G$.
+    \end{enumerate}
+\end{statementsp}
+\begin{pfsp}
+    (1) $\implies$ (2): Let the following be the reduction of $S(g_i, g_j)$ mod $G$.
+    \begin{align}
+        S(g_i, g_j) = q_1 g_1 + \cdots + q_t g_t + r
+    \end{align}
+    and $r \neq 0$. $S(g_i,g_j) \in I$ gives $r \in I$. Thus, we have $\mathrm{in}(r) \in \mathrm{in}(I) = (\mathrm{in}(g_1), \ldots, \mathrm{in}(g_t))$. So, we can take $k$ such that $\mathrm{in}(g_k) \vert \mathrm{in}(r)$. However, this contradicts the condition of the reduction. Thus, we have $r = 0$.\\
+    (2) $\implies$ (1): Let $f \in I \setminus \left\{ 0 \right\}$. We will show $\mathrm{in}(f) \in (\mathrm{in}(g_1), \ldots, \mathrm{in}(g_t))$. We define $\delta_f$ as follows.
+    \begin{align}
+        \mathcal{H}_f \coloneqq \left\{ (h_1, \ldots, h_t) \in R^t \mid f = h_1 g_1 + \cdots + h_t g_t \right\}\\ 
+        \delta_{(h_1, \ldots, h_t)} = \max_{(h_1, \cdots, h_t) \in \mathcal{H}_f} \left\{ \mathrm{in}(h_1 g_1), \ldots, \mathrm{in}(h_t g_t) \right\} \\ 
+        \delta_f = \min_{(h_1, \ldots, h_t) \in \mathcal{H}_f} \delta_{(h_1, \ldots, h_t)}
+    \end{align}
+    By \refsp{prop:ACC}, this minimum is exactly takeable. Clearly, $\mathrm{in}(f) \leq \delta_f$.\\ 
+    If $\mathrm{in}(f) = \delta_f$ for all $f \in I$, we can conclude $G$ is a Gr\"{o}bner basis of $I$. In fact, if this is true for all $f \in I$, $\mathrm{in}(f) = \delta_f = \delta_{\exists (h_1, \cdots, h_t)} = \exists \mathrm{in}(h_ig_i) \in (\mathrm{in}(g_1), \cdots, \mathrm{in}(g_t))$. Thus, we have $\mathrm{in}(I) \subset (\mathrm{in}(g_1), \ldots, \mathrm{in}(g_t))$. And the opposite inclusion is clear.\\ 
+    So, we will show $\mathrm{in}(f) = \delta_f$ for all $f \in I$. Suppose that there exists $f \in I$ such that $\mathrm{in}(f) < \delta_f$. We take such $f$ and $(h_1, \ldots, h_t) \in \mathcal{H}_f$ such that $\delta_f = \delta_{(h_1, \ldots, h_t)}$. Then, 
+    \begin{align}
+        f &= h_1 g_1 + \cdots + h_t g_t\\ 
+        &= \sum_{\mathrm{in}(h_i g_i) = \delta_f} h_i g_i + \sum_{\mathrm{in}(h_i g_i) < \delta_f} h_i g_i\\ 
+        &= \sum_{\mathrm{in}(h_i g_i) = \delta_f} \mathrm{init}(h_i) g_i + \sum_{\mathrm{in}(h_i g_i) = \delta_f} (h_i - \mathrm{init}(h_i)) g_i + \sum_{\mathrm{in}(h_i g_i) < \delta_f} h_i g_i
+    \end{align}
+    Since $\mathrm{in}(f) < \delta_f$, we have
+    \begin{align}
+        \mathrm{in} \left( \sum_{\mathrm{in}(h_i g_i) = \delta_f} \mathrm{init}(h_i) g_i \right) < \delta_f
+    \end{align}
+    Thus, by \refsp{lem:S-polycomb}, this sum is a linear combination of $S(\mathrm{in}(h_j)g_j, \mathrm{in}(h_k)g_k)$ with coefficients in $K$ and with $\mathrm{in}(h_j g_j) = \mathrm{in}(h_kg_k) = \delta_f$. We can easily compute $S(\mathrm{in}(h_j)g_j, \mathrm{in}(h_k)g_k)$ as follows.
+    \begin{align}
+        S(\mathrm{in}(h_j)g_j, \mathrm{in}(h_k)g_k) &= \frac{\mathrm{lcm}(\mathrm{in}(h_j)\mathrm{in}(g_j), \mathrm{in}(h_k)\mathrm{in}(g_k))}{\cancel{\mathrm{in}(h_j)}\mathrm{init}(g_j)} \cancel{\mathrm{in}(h_j)} g_j - \frac{\mathrm{lcm}(\mathrm{in}(h_j)\mathrm{in}(g_j), \mathrm{in}(h_k)\mathrm{in}(g_k))}{\cancel{\mathrm{in}(h_k)}\mathrm{init}(g_k)} \cancel{\mathrm{in}(h_k)} g_k \\ 
+        &= \frac{\delta_f}{\mathrm{init}(g_j)} g_j - \frac{\delta_f}{\mathrm{init}(g_k)} g_k \\
+        &= \frac{\delta_f}{\mathrm{lcm}(\mathrm{in}(g_j), \mathrm{in}(g_k))} \left(\frac{\mathrm{lcm}(\mathrm{in}(g_j), \mathrm{in}(g_k))}{\mathrm{init}(g_j)} g_j - \frac{\mathrm{lcm}(\mathrm{in}(g_j), \mathrm{in}(g_k))}{\mathrm{init}(g_k)} g_k \right) \\
+        &= \frac{\delta_f}{\mathrm{lcm}(\mathrm{in}(g_j), \mathrm{in}(g_k))} S(g_j, g_k)
+    \end{align}
+    Let $\displaystyle{u_{jk} = \frac{\delta_f}{\mathrm{lcm}(\mathrm{in}(g_j), \mathrm{in}(g_k))}}$. Then, we have
+    \begin{align}
+        \sum_{\mathrm{in}(h_i g_i) = \delta_f} \mathrm{init}(h_i) g_i = \sum_{j,k} c_{jk} u_{jk} S(g_j, g_k)
+    \end{align}
+    with some $c_{jk} \in K$. We note that
+    \begin{align}
+        \mathrm{in}(u_{jk} S(g_j, g_k)) < \delta_f
+    \end{align}
+    By using the assumption of (2), there is an expression
+    \begin{align}
+        S(g_j, g_k) = \sum_i p_i^{jk} g_i \quad (p_i^{jk} \in R)
+    \end{align}
+    And note that 
+    \begin{align}
+        \mathrm{in}(p_i^{jk} g_i) \leq \mathrm{in}(S(g_j, g_k))
+    \end{align}
+    So we have eventually
+    \begin{align}
+        \sum_{\mathrm{in}(h_i g_i) = \delta_f} \mathrm{init}(h_i) g_i = \sum_{\mathrm{in}(h_j g_j) = \mathrm{in}(h_k g_k) = \delta_f} c_{jk} u_{jk} \left( \sum_i p_i^{jk} g_i \right)
+    \end{align}
+    When we rearrange the right hand side with respect to $g_i$, let the equation be
+    \begin{align}
+        \sum_i h_i' g_i
+    \end{align}
+    Then, we have $\mathrm{in}(h_i' g_i) < \delta_f$ for all $i$. Finally, we have
+    \begin{align}
+        f &= \sum_{\mathrm{in}(h_i g_i) = \delta_f} \mathrm{init}(h_i) g_i + \sum_{\mathrm{in}(h_i g_i) = \delta_f} (h_i - \mathrm{init}(h_i)) g_i + \sum_{\mathrm{in}(h_i g_i) < \delta_f} h_i g_i \\ 
+        &= \sum_i h_i' g_i + \sum_{\mathrm{in}(h_i g_i) = \delta_f} (h_i - \mathrm{init}(h_i)) g_i + \sum_{\mathrm{in}(h_i g_i) < \delta_f} h_i g_i
+    \end{align}
+    Then, we find all the terms in this equation satisfy $\mathrm{in}(h_i'' g_i) < \delta_f$ for all $i$. This contradicts the definition of $\delta_f$. Thus, we have $\mathrm{in}(f) = \delta_f$ for all $f \in I$. 
+\end{pfsp}
+
+And then, we can compute the Gr\"{o}bner basis of a given ideal by using the Buchberger's algorithm. Let $I = (g_1, g_2, \ldots, g_t)$ be an ideal of $R$. If there is $i,j$ such that $S(g_i, g_j)$ does not have the reduction $h_{ij} \neq 0$ mod $\left\{ g_1, \ldots, g_t \right\}$, then we add $h_{ij}$ to $\left\{ g_1, \ldots, g_t \right\}$. By the definition of the reduction, $\mathrm{in}(h_{ij}) \notin (\mathrm{in}(g_1), \ldots, \mathrm{in}(g_t))$. this process halts in finite steps by \refsp{prop:ACC}. And when this process halts, the resulting set is a Gr\"{o}bner basis of $I$ by \refsp{th:buchbergercriterion}.
 
 \newpage 
 
