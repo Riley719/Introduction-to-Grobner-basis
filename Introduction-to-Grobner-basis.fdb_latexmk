@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex Introduction-to-Grobner-basis"] 1758375892.79305 "Introduction-to-Grobner-basis.aux" "Introduction-to-Grobner-basis.bbl" "Introduction-to-Grobner-basis" 1758375897.09591 0
+["bibtex Introduction-to-Grobner-basis"] 1758382753.98778 "Introduction-to-Grobner-basis.aux" "Introduction-to-Grobner-basis.bbl" "Introduction-to-Grobner-basis" 1758382758.36434 0
   "./references.bib" 1758363223 2030 a8a69af8ef78aba268e886c683811033 ""
-  "Introduction-to-Grobner-basis.aux" 1758375895 23557 c27b618cf5b908e79324e4dcadd9b385 "lualatex"
+  "Introduction-to-Grobner-basis.aux" 1758382757 23557 c27b618cf5b908e79324e4dcadd9b385 "lualatex"
   "c:/texlive/2024/texmf-dist/bibtex/bst/base/alpha.bst" 1731918253 23907 a5f93555796fb564b924339521f10a7c ""
   (generated)
   "Introduction-to-Grobner-basis.bbl"
   "Introduction-to-Grobner-basis.blg"
   (rewritten before read)
-["lualatex"] 1758375893.31839 "c:/Users/tmp_rirai_ikeda/Documents/TitechFolder/Introduction-to-Grobner-basis/Introduction-to-Grobner-basis.tex" "Introduction-to-Grobner-basis.pdf" "Introduction-to-Grobner-basis" 1758375897.09712 0
+["lualatex"] 1758382754.52387 "c:/Users/tmp_rirai_ikeda/Documents/TitechFolder/Introduction-to-Grobner-basis/Introduction-to-Grobner-basis.tex" "Introduction-to-Grobner-basis.pdf" "Introduction-to-Grobner-basis" 1758382758.36528 0
   "Bruno_Buchberger.jpg" 1757132320 147192 80099cea2fa835ae74ebe493335da1ae ""
   "C:/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmmono10-regular.luc" 1731999005 81829 8ffe9c1e422a738b738f27028feb86f2 ""
   "C:/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmroman10-bold.luc" 1731998999 128402 fcb6ea1a5246e0c93abdf6895ccc6995 ""
@@ -21,11 +21,11 @@
   "C:/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmroman9-bold.luc" 1757171007 128443 b66961beb68226e626b3132ce0ad02e5 ""
   "C:/texlive/2024/texmf-var/luatex-cache/generic/fonts/otl/lmroman9-regular.luc" 1731979376 127952 d7af0747fa87c24865a85042d01835a6 ""
   "C:/texlive/2024/texmf-var/luatex-cache/generic/names/luaotfload-names.luc.gz" 1752652853 303286 e27c6a3d688b4a3e33661acf22350353 ""
-  "Introduction-to-Grobner-basis.aux" 1758375895 23557 c27b618cf5b908e79324e4dcadd9b385 "lualatex"
-  "Introduction-to-Grobner-basis.bbl" 1758375893 904 a1d81ad0de38090188dcfb5c1c42a6c8 "bibtex Introduction-to-Grobner-basis"
-  "Introduction-to-Grobner-basis.out" 1758375895 668 3118fbb2f2594f54f46e903ec7c37b74 "lualatex"
+  "Introduction-to-Grobner-basis.aux" 1758382757 23557 c27b618cf5b908e79324e4dcadd9b385 "lualatex"
+  "Introduction-to-Grobner-basis.bbl" 1758382754 904 a1d81ad0de38090188dcfb5c1c42a6c8 "bibtex Introduction-to-Grobner-basis"
+  "Introduction-to-Grobner-basis.out" 1758382757 668 3118fbb2f2594f54f46e903ec7c37b74 "lualatex"
   "Introduction-to-Grobner-basis.tex" 1758375868 38101 3dc25818cc51c2e2978634aa8cfbdd28 ""
-  "Introduction-to-Grobner-basis.toc" 1758375895 330 7696c99d03557862ed93c87fa02f0813 "lualatex"
+  "Introduction-to-Grobner-basis.toc" 1758382757 330 7696c99d03557862ed93c87fa02f0813 "lualatex"
   "c:/Users/tmp_rirai_ikeda/Documents/TitechFolder/Introduction-to-Grobner-basis/Introduction-to-Grobner-basis.tex" 1758375868 38101 3dc25818cc51c2e2978634aa8cfbdd28 ""
   "c:/texlive/2024/texmf-dist/fonts/opentype/public/lm/lmmono10-regular.otf" 1731920998 64684 c6f5a48921f83c1a51d9384f785ddd5a ""
   "c:/texlive/2024/texmf-dist/fonts/opentype/public/lm/lmroman10-italic.otf" 1731920998 118828 5d91d27a335c65bda4818de63abc25ce ""
